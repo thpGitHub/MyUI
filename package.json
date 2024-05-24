@@ -1,26 +1,46 @@
 {
-  "name": "first-npm-package",
-  "version": "0.1.0",
-  "private": true,
+  "name": "unique-first-npm-package",
+  "version": "0.1.9",
+  "description": "A set of reusable Next.js components",
+  "main": "dist/components/index.js",
+  "module": "dist/components/index.js",
+  "types": "dist/types/index.d.ts",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "clean":"node scripts/clean.js",
+    "build:components": "swc src/components --out-dir dist/components && node scripts/reorganize.js",
+    "build:types": "tsc",
+    "build:beforeNpmPublish": "npm run clean && npm run build:types && npm run build:components"
   },
-  "dependencies": {
-    "react": "^18",
-    "react-dom": "^18",
-    "next": "14.2.3"
+  "peerDependencies": {
+    "next": ">=11.0.0",
+    "react": ">=17.0.0",
+    "react-dom": ">=17.0.0"
   },
   "devDependencies": {
-    "typescript": "^5",
+    "@babel/cli": "^7.24.5",
+    "@babel/core": "^7.24.5",
+    "@babel/preset-env": "^7.24.5",
+    "@babel/preset-react": "^7.24.1",
+    "@babel/preset-typescript": "^7.24.1",
+    "@swc/cli": "^0.3.12",
+    "@swc/core": "^1.5.7",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.3",
+    "fs-extra": "^11.2.0",
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
-    "eslint": "^8",
-    "eslint-config-next": "14.2.3"
-  }
+    "typescript": "^5"
+  },
+  "files": [
+    "dist/components",
+    "dist/types",
+    "README.md"
+  ]
 }
